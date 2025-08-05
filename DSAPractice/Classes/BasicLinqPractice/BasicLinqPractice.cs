@@ -56,52 +56,52 @@ public class BasicLinqPractice
         new Student { Name = "George", Age = 17, GPA = 3.0, IsEnrolled = true }
     };
 
-    public List<Student> getEnrolledStudents()
+    public List<Student> GetEnrolledStudents()
     {
         return students.Where(student => student.IsEnrolled).ToList();
     }
 
-    public Student getOldestStudent()
+    public Student GetOldestStudent()
     {
         return students.OrderByDescending(student => student.Age).FirstOrDefault();
     }
 
-    public bool hasFailingStudents()
+    public bool HasFailingStudents()
     {
         return students.Any(student => student.GPA < 2.0);
     }
 
-    public int getCountOfHighAchievers()
+    public int GetCountOfHighAchievers()
     {
         return students.Count(student => student.GPA >= 3.5);
     }
 
-    public bool areAllStudentsEnrolled()
+    public bool AreAllStudentsEnrolled()
     {
         return students.All(student => student.IsEnrolled);
     }
 
-    public List<Student> studentsSortedByGradesInDescendingOrder()
+    public List<Student> StudentsSortedByGradesInDescendingOrder()
     {
         return students.OrderByDescending(student => student.GPA).ToList();
     }
 
-    public Student getFirstStudentUnderAge20()
+    public Student GetFirstStudentUnderAge20()
     {
         return students.FirstOrDefault(student => student.Age < 20);
     }
 
-    public List<string> listOfNamesWithAtLeast3GPA()
+    public List<string> ListOfNamesWithAtLeast3GPA()
     {
         return students.Where(student => student.GPA >= 3.0).Select(student => student.Name).ToList();
     }
 
-    public List<string> listOfStudentNamesSortedAlphabetically()
+    public List<string> ListOfStudentNamesSortedAlphabetically()
     {
         return students.Select(student => student.Name).OrderBy(name => name).ToList();
     }
 
-    public Student[] convertStudentListToArray()
+    public Student[] ConvertStudentListToArray()
     {
         return students.ToArray();
     }
