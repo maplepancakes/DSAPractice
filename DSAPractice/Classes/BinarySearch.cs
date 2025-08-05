@@ -1,6 +1,6 @@
 namespace collections_and_data_iteration_fundamentals;
 
-public class BinarySearchPractice
+public class BinarySearch
 {
     public int FindMaxDownloadableFileSize(int[] fileSizes, int maxSize)
     {

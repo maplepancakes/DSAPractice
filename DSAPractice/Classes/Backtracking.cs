@@ -1,6 +1,6 @@
 namespace collections_and_data_iteration_fundamentals;
 
-public class BacktrackingPractice
+public class Backtracking
 {
     public void GenerateBinaryStrings(String currentString, int n)
     {

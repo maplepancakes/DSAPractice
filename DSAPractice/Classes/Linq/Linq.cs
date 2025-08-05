@@ -1,6 +1,6 @@
 namespace collections_and_data_iteration_fundamentals;
 
-public class BasicLinqPractice
+public class Linq
 {
     /*
      *  CATEGORY	     METHODS TO LEARN	                DESCRIPTION

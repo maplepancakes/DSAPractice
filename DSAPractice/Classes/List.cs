@@ -1,6 +1,6 @@
 namespace collections_and_data_iteration_fundamentals;
 
-public class ListPractice
+public class List
 {
     public void QuestionOne()
     {

@@ -1,6 +1,6 @@
 namespace collections_and_data_iteration_fundamentals;
 
-public class DictionaryPractice
+public class Dictionary
 {
     private Dictionary<string, string> _breed = new Dictionary<string, string>
     {

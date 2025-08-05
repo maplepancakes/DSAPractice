@@ -2,9 +2,9 @@ using collections_and_data_iteration_fundamentals;
 
 namespace DSAPractice.Test;
 
-public class TestBinarySearchPractice
+public class TestBinarySearch
 {
-    private readonly BinarySearchPractice _binarySearchPractice = new BinarySearchPractice();
+    private readonly BinarySearch _binarySearch = new BinarySearch();
     
     [Theory]
     [InlineData(new[] { 101, 104, 107, 110, 115 }, 107, 2)]
@@ -14,7 +14,7 @@ public class TestBinarySearchPractice
     [InlineData(new int[] { }, 107, -1)]
     public void Test_GetPageStartIndex(int[] sortedItemIds, int targetId, int expected)
     {
-        int result = _binarySearchPractice.GetPageStartIndex(sortedItemIds, targetId);
+        int result = _binarySearch.GetPageStartIndex(sortedItemIds, targetId);
         Assert.Equal(result, expected);
     }
 
@@ -27,7 +27,7 @@ public class TestBinarySearchPractice
     [InlineData(new double[] {}, 3.0, -1)]
     public void Test_FindFirstDayWithHighAverage(double[] readings, double threshold, double expected)
     {
-        int result = _binarySearchPractice.FindFirstDayWithHighAverage(readings, threshold);
+        int result = _binarySearch.FindFirstDayWithHighAverage(readings, threshold);
         Assert.Equal(result, expected);
     }
 }
