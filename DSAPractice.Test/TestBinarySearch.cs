@@ -15,7 +15,7 @@ public class TestBinarySearch
     public void Test_GetPageStartIndex(int[] sortedItemIds, int targetId, int expected)
     {
         int result = _binarySearch.GetPageStartIndex(sortedItemIds, targetId);
-        Assert.Equal(result, expected);
+        Assert.Equal(expected, result);
     }
 
     [Theory]
@@ -28,6 +28,6 @@ public class TestBinarySearch
     public void Test_FindFirstDayWithHighAverage(double[] readings, double threshold, double expected)
     {
         int result = _binarySearch.FindFirstDayWithHighAverage(readings, threshold);
-        Assert.Equal(result, expected);
+        Assert.Equal(expected, result);
     }
 }
