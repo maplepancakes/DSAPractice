@@ -24,6 +24,14 @@ public class TestSlidingWindow
         new object[] { new List<string> { "A", "B", "C", "A", "A", "D", "E", "F", "E" }, 4 },
         new object[] { new List<string> { "A", "B", "C", "B", "B", "C", "D" }, 3 }
         };
+    
+    public static IEnumerable<object[]> TestCasesFindMaximumInSubArrayOfKElements =>
+        new List<object[]>
+        { 
+        new object[] { new[] {4, 2, 12, 3, 8, 7}, 3, new List<int> {12, 12, 12, 8} },
+        new object[] { new[] {4, 2, 12}, 3, new List<int> {12} },
+        new object[] { new[] {4, 2, 12, 6, 5, 4}, 2, new List<int> {4, 12, 12, 6, 5} }
+        };
 
     [Theory]
     [InlineData(new[] {2, 1, 5, 1, 3, 2}, 3, 9)]
@@ -63,6 +71,25 @@ public class TestSlidingWindow
     public void Test_DetectDDoSAttack(int[] timestamps, int t, int n, bool expected)
     {
         bool result = _slidingWindow.DetectDDoSAttack(timestamps, t, n);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [MemberData(nameof(TestCasesFindMaximumInSubArrayOfKElements))]
+    public void Test_MaximumInSubArrayOfKElements(int[] nums, int k, List<int> expected)
+    {
+        List<int> result = _slidingWindow.FindMaximumInSubArrayOfKElements(nums, k);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData(new[] { 10, 20, 30, 40, 50, 60, 70, 80 }, 50)]
+    [InlineData(new[] { 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 5)]
+    [InlineData(new[] { 1, 2, 3, 100, 100, 100, 100, 1, 1 }, 58)]
+    [InlineData(new[] { 2, 4, 6, 8, 10, 12, 14 }, 8)]
+    public void Test_MaximumAveragePlayerScoreOverA7DayStreak(int[] scores, int expected)
+    {
+        int result = _slidingWindow.MaximumAveragePlayerScoreOverA7DayStreak(scores);
         Assert.Equal(expected, result);
     }
 }

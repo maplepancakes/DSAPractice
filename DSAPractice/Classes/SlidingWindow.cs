@@ -129,4 +129,102 @@ public class SlidingWindow
 
         return false;
     }
+
+    public List<int> FindMaximumInSubArrayOfKElements(int[] nums, int k)
+    {
+        int left = 0;
+        int right = 0;
+        LinkedList<int> indices = new LinkedList<int>();
+        List<int> result = new List<int>();
+
+        while (right < nums.Length)
+        {
+            while (indices.Count > 0 && left > indices.First.Value)
+            {
+                indices.RemoveFirst();
+            }
+            
+            while (indices.Count > 0 && nums[right] > nums[indices.Last.Value])
+            {
+                indices.RemoveLast();
+            }
+            indices.AddLast(right);
+            
+            if (right - left == k - 1)
+            {
+                result.Add(nums[indices.First.Value]);
+                left++;
+            }
+            right++;
+        }
+
+        return result;
+    }
+
+    public List<int> WarmestCoffeeInTheLastXMinutes(int[] temps, int x)
+    {
+        int left = 0; // start of window
+        int right = 0; // end of window
+        List<int> result = new List<int>(); // output
+        LinkedList<int> indices = new LinkedList<int>(); // used to keep track of the largest temperature in current sliding window
+        
+        while (right < temps.Length) // used to ensure that every possible sub-array/sliding window from temps is formed
+        {
+            // checks and removes any indices in the deque that are out of the current sliding window
+            while (indices.Count > 0 && left > indices.First.Value)
+            {
+                indices.RemoveFirst(); 
+            }
+
+            // checks and removes any indices in the deque containing past temperatures that are smaller than the current temperature
+            while (indices.Count > 0 && temps[right] > temps[indices.Last.Value])
+            {
+                indices.RemoveLast();
+            }
+            indices.AddLast(right);
+
+            // if number of elements in sliding window = x, assign the maximum temperature found in the sliding window by taking the first most value of the 
+            // move the left and right pointer up so that a new sub-array/sliding window containing x elements is formed
+            if (right - left == x - 1)
+            {
+                result.Add(temps[indices.First.Value]);
+                left++;
+            }
+            right++; // do nothing and only move to the right pointer up if the number of elements inside the sub-array/sliding window is not equal to x elements
+        }
+
+        return result;
+    }
+
+    public int MaximumAveragePlayerScoreOverA7DayStreak(int[] scores)
+    {
+        int left = 0; // start window
+        int right = 6; // end window, 7 day streak so our initial window will have 7 elements, hence right = 7 - 1 = 6 -> 0, 1, 2, 3, 4, 5, 6 -> 7 elements
+        int maxAverage = 0;
+        int total = 0;
+
+        while (right < scores.Length)
+        {
+            int currentMaxAverage = 0;
+            if (right ==  7 - 1)
+            {
+                for (int i = 0; i <= right; i++)
+                {
+                    total += scores[i];
+                }
+
+                currentMaxAverage = total / 7;
+            }
+            else
+            {
+                currentMaxAverage = (total - scores[left - 1] + scores[right]) / 7;
+            }
+
+            if (currentMaxAverage > maxAverage) maxAverage = currentMaxAverage;
+            left++;
+            right++;
+        }
+
+        return maxAverage;
+    }
 }
