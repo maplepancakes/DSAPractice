@@ -227,4 +227,96 @@ public class SlidingWindow
 
         return maxAverage;
     }
+
+    public int ECommerceSalesStreak(int[] revenue, int k)
+    {
+        int left = 0;
+        int right = k - 1;
+        int maxTotalRevenue = 0;
+        int currentTotalRevenue = 0;
+
+        while (right < revenue.Length)
+        {
+            if (right == k - 1)
+            {
+                for (int i = 0; i <= right; i++)
+                {
+                    currentTotalRevenue += revenue[i];
+                }
+            }
+            else
+            {
+                currentTotalRevenue = currentTotalRevenue - revenue[left - 1] + revenue[right];
+            }
+
+            if (currentTotalRevenue > maxTotalRevenue)
+            {
+                maxTotalRevenue = currentTotalRevenue;
+            }
+            
+            left++;
+            right++;
+        }
+
+        return maxTotalRevenue;
+    }
+
+    public int LongestUniqueBrowsingSession(int[] pages)
+    {
+        int left = 0;
+        int right = 0;
+        int longestUniqueWindow = 0;
+        Dictionary<int, int> visitedPages = new Dictionary<int, int>();
+
+        while (right < pages.Length)
+        {
+            if (visitedPages.ContainsKey(pages[right]))
+            {
+                left = visitedPages[pages[right]] + 1;
+            }
+            int currentLongestUniqueWindow = right - left + 1;
+            visitedPages[pages[right]] = right;
+            right++;
+
+            if (currentLongestUniqueWindow > longestUniqueWindow)
+            {
+                longestUniqueWindow = currentLongestUniqueWindow;
+            }
+        }
+
+        return longestUniqueWindow;
+    }
+
+    public List<int> MaximumTemperatureInLastKHours(int[] temps, int k)
+    {
+        int left = 0;
+        int right = 0;
+        LinkedList<int> indexOfMaximumTemperatures = new LinkedList<int>();
+        List<int> result = new List<int>();
+
+        while (right < temps.Length)
+        {
+            while (indexOfMaximumTemperatures.Count > 0 && left > indexOfMaximumTemperatures.First.Value)
+            {
+                indexOfMaximumTemperatures.RemoveFirst();
+            }
+
+            while (indexOfMaximumTemperatures.Count > 0 && temps[right] > temps[indexOfMaximumTemperatures.Last.Value])
+            {
+                indexOfMaximumTemperatures.RemoveLast();
+            }
+
+            indexOfMaximumTemperatures.AddLast(right);
+
+            if (right - left == k - 1)
+            {
+                result.Add(temps[indexOfMaximumTemperatures.First.Value]);
+                left++;
+            }
+
+            right++;
+        }
+
+        return result;
+    }
 }
