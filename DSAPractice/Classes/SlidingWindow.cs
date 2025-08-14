@@ -319,4 +319,86 @@ public class SlidingWindow
 
         return result;
     }
+
+    public int MinConsecutiveDaysToHitDataCapUsage(int[] usage, int cap)
+    {
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        int minConsecutiveDaysToHitCap = int.MaxValue;
+
+        while (right < usage.Length)
+        {
+            sum += usage[right];
+            while (sum >= cap)
+            {
+                minConsecutiveDaysToHitCap = Math.Min(minConsecutiveDaysToHitCap, right - left + 1);
+                sum -= usage[left];
+                left++;
+            }
+            right++;
+        }
+
+        return minConsecutiveDaysToHitCap == int.MaxValue ? 0 : minConsecutiveDaysToHitCap;
+    }
+
+    public int MaxConsecutiveSequenceOfCustomerWaitTime(int[] waitTime, int serviceLimit)
+    {
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        int maxConsecutiveSequence = 0;
+
+        while (right < waitTime.Length)
+        {
+            sum += waitTime[right];
+            while (sum > serviceLimit)
+            {
+                sum -= waitTime[left];
+                left++;
+            }
+            
+            maxConsecutiveSequence = Math.Max(maxConsecutiveSequence, right - left + 1);
+            right++;
+        }
+
+        return maxConsecutiveSequence;
+    }
+
+    public double LargestPercentageIncrease(int[] nums, int k)
+    {
+        int left = 0;
+        int right = k - 1;
+        int previousTotal = 0;
+        double largestPercentageIncrease = 0;
+
+        while (right < nums.Length)
+        {
+            int currentTotal = 0;
+            double currentPercentageIncrease = 0;
+            if (right == k - 1)
+            {
+                for (int i = 0; i <= right; i++)
+                {
+                    currentTotal += nums[i];
+                }
+            }
+            else
+            {
+                currentTotal = previousTotal - nums[left - 1] + nums[right];
+                currentPercentageIncrease = (currentTotal - previousTotal) * 1.0 / previousTotal * 100;
+            }
+
+            if (currentPercentageIncrease > largestPercentageIncrease)
+            {
+                largestPercentageIncrease = currentPercentageIncrease;
+            }
+
+            previousTotal = currentTotal;
+            left++;
+            right++;
+        }
+
+        return largestPercentageIncrease;
+    }
 }

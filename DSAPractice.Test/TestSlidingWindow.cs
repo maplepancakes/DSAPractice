@@ -135,4 +135,31 @@ public class TestSlidingWindow
         List<int> result = _slidingWindow.MaximumTemperatureInLastKHours(temps, k);
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData(new[] { 2, 1, 5, 2, 3, 2 }, 7, 2)]
+    [InlineData(new[] { 3, 4, 1, 1, 6 }, 8, 3)]
+    public void Test_MinConsecutiveDaysToHitDataCapUsage(int[] usage, int cap, int expected)
+    {
+        int result = _slidingWindow.MinConsecutiveDaysToHitDataCapUsage(usage, cap);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData(new[] { 1, 2, 1, 1, 1, 3, 2 }, 5, 4)]
+    [InlineData(new[] { 4, 2, 1 }, 3, 2)]
+    [InlineData(new[] { 1, 1, 1, 1 }, 5, 4)]
+    public void Test_MaxConsecutiveSequenceOfCustomerWaitTime(int[] waitTime, int serviceLimit, int expected)
+    {
+        int result = _slidingWindow.MaxConsecutiveSequenceOfCustomerWaitTime(waitTime, serviceLimit);
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData(new[] { 10, 20, 30, 25, 35, 50 }, 2, 66)]
+    public void Test_LargestPercentageIncrease(int[] nums, int k, int expected)
+    {
+        double result = _slidingWindow.LargestPercentageIncrease(nums, k);
+        Assert.Equal(expected, result);
+    }
 }
