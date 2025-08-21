@@ -195,4 +195,56 @@ public class LinkedList
         }
         Console.WriteLine(String.Join(" -> ", result));
     }
+
+    public void FindMiddleUsingTwoPassSolution(SinglyListNode<string> head)
+    {
+        int lengthOfLinkedList = 0;
+
+        SinglyListNode<string> current = head;
+        while (current != null)
+        {
+            lengthOfLinkedList++;
+            current = current.Next;
+        }
+
+        int middleNode = (lengthOfLinkedList / 2) + 1;
+        int currentCount = 1;
+        current = head;
+        while (currentCount != middleNode)
+        {
+            current = current.Next;
+            currentCount++;
+        }
+        
+        Console.WriteLine($"Middle value: {current.Val}");
+    }
+
+    public void FindMiddleUsingOnePassSolution(SinglyListNode<string> head)
+    {
+        if (head == null)
+        {
+            Console.WriteLine("No middle node found because head is null");
+            return;
+        }
+        if (head.Next == null)
+        {
+            Console.WriteLine($"Middle node is: {head.Val}");
+            return;
+        }
+        
+        SinglyListNode<string> slow = head;
+        SinglyListNode<string> fast = head;
+        while (true)
+        {
+            if (fast == null || fast.Next == null)
+            {
+                break;
+            }
+
+            slow = slow.Next;
+            fast = fast.Next.Next;
+        }
+        
+        Console.WriteLine($"Middle node is: {slow.Val}");
+    }
 }

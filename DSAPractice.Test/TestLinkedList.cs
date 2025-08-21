@@ -66,6 +66,29 @@ public class TestLinkedList
                         new SinglyListNode<string>("D", null)))) },
         };
     
+    public static IEnumerable<object[]> TestFindMiddle =>
+        new List<object[]>
+        { 
+            new object[] { new SinglyListNode<string>("A", 
+                new SinglyListNode<string>("B", 
+                    new SinglyListNode<string>("C", 
+                        new SinglyListNode<string>("D", 
+                            new SinglyListNode<string>("E", null))))) },
+            new object[] { new SinglyListNode<string>("A", 
+                new SinglyListNode<string>("B", 
+                    new SinglyListNode<string>("C", 
+                        new SinglyListNode<string>("D", 
+                            new SinglyListNode<string>("E", 
+                                new SinglyListNode<string>("F", null)))))) },
+            new object[] { new SinglyListNode<string>("A", 
+                new SinglyListNode<string>("B", 
+                    new SinglyListNode<string>("C", null))) },
+            new object[] { new SinglyListNode<string>("A", null) },
+            new object[] { new SinglyListNode<string>("A", 
+                new SinglyListNode<string>("B", null)) },
+            new object[] { null },
+        };
+        
     [Fact]
     public void Test_PrintUserBrowsingHistory()
     {
@@ -121,5 +144,12 @@ public class TestLinkedList
     public void Test_ReverseOrder(SinglyListNode<string> head)
     {
         _linkedList.ReverseOrder(head);
+    }
+
+    [Theory]
+    [MemberData(nameof(TestFindMiddle))]
+    public void Test_FindMiddleUsingOnePassSolution(SinglyListNode<string> head)
+    {
+        _linkedList.FindMiddleUsingOnePassSolution(head);
     }
 }
