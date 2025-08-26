@@ -223,28 +223,182 @@ public class LinkedList
     {
         if (head == null)
         {
-            Console.WriteLine("No middle node found because head is null");
+            Console.WriteLine("no middle node is found because head is null");
             return;
         }
         if (head.Next == null)
         {
-            Console.WriteLine($"Middle node is: {head.Val}");
+            Console.WriteLine("middle node is head");
             return;
         }
-        
+
         SinglyListNode<string> slow = head;
         SinglyListNode<string> fast = head;
-        while (true)
+        while (fast != null && fast.Next != null)
         {
-            if (fast == null || fast.Next == null)
-            {
-                break;
-            }
-
             slow = slow.Next;
             fast = fast.Next.Next;
         }
         
-        Console.WriteLine($"Middle node is: {slow.Val}");
+        Console.WriteLine($"middle node is {slow.Val}");
+    }
+
+    public void DetectCircularUsingHashSet(SinglyListNode<string> head)
+    {
+        if (head == null)
+        {
+            Console.WriteLine("no detection done as head is null");
+            return;
+        }
+
+        HashSet<SinglyListNode<string>> visitedNodes = new HashSet<SinglyListNode<string>>();
+        SinglyListNode<string> current = head;
+        while (current != null)
+        {
+            if (visitedNodes.Contains(current))
+            {
+                Console.WriteLine($"Linked list contains cycle");
+                return;
+            }
+
+            visitedNodes.Add(current);
+            current = current.Next;
+        }
+    }
+
+    public void DetectCircularUsingPointers(SinglyListNode<string> head)
+    {
+        if (head == null)
+        {
+            Console.WriteLine("No detection required as head is null");
+            return;
+        }
+
+        SinglyListNode<string> tortoise = head;
+        SinglyListNode<string> hare = head;
+        while (hare != null && hare.Next != null)
+        {
+            tortoise = tortoise.Next;
+            hare = hare.Next.Next;
+            
+            if (hare == tortoise)
+            {
+                Console.WriteLine("Cycle detected");
+                return;
+            }
+        }
+    }
+
+    public SinglyListNode<int> MergeSortedLinkedLists(SinglyListNode<int> headA, SinglyListNode<int> headB)
+    {
+        SinglyListNode<int> newHead = new SinglyListNode<int>(-1, null);
+        SinglyListNode<int> current = newHead;
+
+        while (headA != null && headB != null)
+        {
+            if (headA.Val < headB.Val)
+            {
+                current.Next = headA;
+                headA = headA.Next;
+                current = current.Next;
+                continue;
+            }
+            if (headA.Val > headB.Val)
+            {
+                current.Next = headB;
+                headB = headB.Next;
+                current = current.Next;
+                continue;
+            }
+            if (headA.Val == headB.Val)
+            {
+                current.Next = headA;
+                headA = headA.Next;
+                current = current.Next;
+                
+                current.Next = headB;
+                headB = headB.Next;
+                current = current.Next;
+            }
+        }
+
+        if (headA != null) current.Next = headA;
+        if (headB != null) current.Next = headB;
+
+        return newHead.Next;
+    }
+
+    public SinglyListNode<int> RemoveDuplicatesFromSortedLinkedList(SinglyListNode<int> head)
+    {
+        SinglyListNode<int> current = head;
+        while (current != null && current.Next != null)
+        {
+            if (current.Val == current.Next.Val)
+            {
+                current.Next = current.Next.Next;
+            }
+            else
+            {
+                current = current.Next;
+            }
+        }
+
+        return head;
+    }
+
+    public bool IntersectingNodesUsingHashSet(SinglyListNode<int> headA, SinglyListNode<int> headB)
+    {
+        HashSet<SinglyListNode<int>> visitedNodes = new HashSet<SinglyListNode<int>>();
+
+        while (headA != null)
+        {
+            visitedNodes.Add(headA);
+            headA = headA.Next;
+        }
+
+        while (headB != null)
+        {
+            if (visitedNodes.Contains(headB))
+            {
+                return true;
+            }
+            headB = headB.Next;
+        }
+
+        return false;
+    }
+
+    public bool IntersectingNodesUsingPointers(SinglyListNode<int> headA, SinglyListNode<int> headB)
+    {
+        SinglyListNode<int> pointerA = headA;
+        SinglyListNode<int> pointerB = headB;
+        while (pointerA != pointerB)
+        {
+
+
+            pointerA = pointerA == null ? headB : pointerA.Next;
+            pointerB = pointerB == null ? headA : pointerB.Next;
+        }
+
+        return pointerA != null;
+    }
+
+    public void ForwardAndBackwardTraversal(LinkedList<string> linkedList)
+    {
+        if (linkedList == null || linkedList.Count == 0) return;
+        
+        LinkedListNode<string> current = linkedList.First;
+        while (current != null)
+        {
+            Console.WriteLine(current.Value);
+            current = current.Next;
+        }
+
+        current = linkedList.Last;
+        while (current != null)
+        {
+            Console.WriteLine(current.Value);
+            current = current.Previous;
+        }
     }
 }
