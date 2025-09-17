@@ -401,4 +401,52 @@ public class LinkedList
             current = current.Previous;
         }
     }
+
+    public LinkedListNode<string> ReverseBuiltInLinkedList(LinkedListNode<string> head)
+    {
+        if (head == null || head.Next == null) return head;
+        
+        LinkedList<string> reversedLinkedList = new LinkedList<string>();
+        LinkedListNode<string> current = head;
+        while (current != null)
+        {
+            reversedLinkedList.AddFirst(current.Value);
+            current = current.Next;
+        }
+
+        return reversedLinkedList.First;
+    }
+
+    public bool IntersectingNodesUsingBuiltInLinkedList(LinkedListNode<string> headA, LinkedListNode<string> headB)
+    {
+        if (headA == null || headB == null) return false;
+
+        LinkedListNode<string> pointerA = headA;
+        LinkedListNode<string> pointerB = headB;
+        while (pointerA != pointerB)
+        {
+            pointerA = pointerA == null ? headB : pointerA.Next;
+            pointerB = pointerB == null ? headA : pointerB.Next;
+        }
+
+        return pointerA != null;
+    }
+
+    public DoublyListNode<string> ReverseDoublyLinkedList(DoublyListNode<string> head)
+    {
+        if (head == null || head.Next == null) return head;
+
+        DoublyListNode<string> current = head;
+        while (current != null)
+        {
+            DoublyListNode<string> nextNode = current.Next;
+            current.Next = current.Prev;
+            current.Prev = nextNode;
+
+            if (current.Prev == null) head = current;
+            current = current.Prev;
+        }
+
+        return head;
+    }
 }
