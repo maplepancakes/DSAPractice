@@ -112,9 +112,42 @@ public class TestBinaryTree
     [Fact]
     public void Test_DeleteNodeFromBinarySearchTreeIteratively()
     {
+        // Case 1 (no child node), expected output: 20 -> 30 -> 100 -> 250 -> 500
         Node node = _binaryTree.DeleteNodeFromBinarySearchTreeIteratively(createBinarySearchTree(), 10);
+        Console.WriteLine("CASE 1: NO CHILD NODE");
+        _binaryTree.InorderTraversal(node);
+        Console.WriteLine("=====================");
         
-        // Case 1 (no child node), expected output: 20 -> 30 -> 40 -> 100 -> 250 -> 500
+        // Case 2 (one child node), expected output: 10 -> 20 -> 30 -> 100 -> 250
+        Console.WriteLine("CASE 2: ONE CHILD NODE");
+        node = _binaryTree.DeleteNodeFromBinarySearchTreeIteratively(createBinarySearchTree(), 500);
+        _binaryTree.InorderTraversal(node);
+        Console.WriteLine("=====================");
+        
+        // Case 3 (two child nodes), expected output: 10 -> 30 -> 100 -> 250 -> 500
+        Console.WriteLine("CASE 3: TWO CHILD NODES");
+        node = _binaryTree.DeleteNodeFromBinarySearchTreeIteratively(createBinarySearchTree(), 20);
+        _binaryTree.InorderTraversal(node);
+    }
+
+    [Fact]
+    public void Test_DeleteNodeFromBinarySearchTreeRecursively()
+    {
+        // Case 1 (no child node), expected output: 20 -> 30 -> 100 -> 250 -> 500
+        Node node = _binaryTree.DeleteNodeFromBinarySearchTreeRecursively(createBinarySearchTree(), 10);
+        Console.WriteLine("CASE 1: NO CHILD NODE");
+        _binaryTree.InorderTraversal(node);
+        Console.WriteLine("=====================");
+        
+        // Case 2 (one child node), expected output: 10 -> 20 -> 30 -> 100 -> 250
+        Console.WriteLine("CASE 2: ONE CHILD NODE");
+        node = _binaryTree.DeleteNodeFromBinarySearchTreeRecursively(createBinarySearchTree(), 500);
+        _binaryTree.InorderTraversal(node);
+        Console.WriteLine("=====================");
+        
+        // Case 3 (two child nodes), expected output: 10 -> 30 -> 100 -> 250 -> 500
+        Console.WriteLine("CASE 3: TWO CHILD NODES");
+        node = _binaryTree.DeleteNodeFromBinarySearchTreeRecursively(createBinarySearchTree(), 20);
         _binaryTree.InorderTraversal(node);
     }
 }

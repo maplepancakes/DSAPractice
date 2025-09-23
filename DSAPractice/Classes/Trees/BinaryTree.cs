@@ -270,9 +270,9 @@ public class BinaryTree
 
     public Node DeleteNodeFromBinarySearchTreeIteratively(Node node, int value)
     {
+        // Handle edge case where root node is null or the only node that exists is the root node
         if (node == null || (node.Left == null && node.Right == null && node.Value == value))
         {
-            Console.WriteLine("No tree exists.");
             return null;
         }
 
@@ -298,19 +298,23 @@ public class BinaryTree
                 // Case 1: No child nodes
                 if (currentNode.Left == null && currentNode.Right == null)
                 {
-                    parentNode.Left = null;
-                    parentNode.Right = null;
+                    if (parentNode.Left == currentNode) {
+                        parentNode.Left = null;
+                    }
+                    if (parentNode.Right == currentNode) {
+                        parentNode.Right = null;
+                    }
                 }
 
                 // Case 2: One child node
                 if ((currentNode.Left != null && currentNode.Right == null) ||
                     (currentNode.Right != null && currentNode.Left == null))
                 {
-                    if (parentNode.Left.Value == value)
+                    if (parentNode.Left == currentNode)
                     {
                         parentNode.Left = currentNode.Left == null ? currentNode.Right : currentNode.Left;
                     }
-                    if (parentNode.Right.Value == value)
+                    if (parentNode.Right == currentNode)
                     {
                         parentNode.Right = currentNode.Left == null ? currentNode.Right : currentNode.Left;
                     }
@@ -331,13 +335,75 @@ public class BinaryTree
                     // Assign min value in right-subtree to the node to be deleted, then delete the duplicate node
                     // Logic here handles cases with node that contains either one child node or no child node (no need to consider scenario with two child nodes because the node with min value will never have a left child node)
                     currentNode.Value = currentSuccessor.Value;
-                    parentSuccessor.Left = currentSuccessor.Right;
+                    // Case for when min value node is found by traversing down the left-subtree of currentNode.Right
+                    if (parentSuccessor.Left == currentSuccessor)
+                    {
+                        parentSuccessor.Left = currentSuccessor.Right;
+                    }
+                    // Case for when min value node is currentNode.Right.Value
+                    if (parentSuccessor.Right == currentSuccessor)
+                    {
+                        parentSuccessor.Right = currentSuccessor.Right;
+                    }
                 }
-
                 break;
             }
         }
 
         return node;
+    }
+
+    public Node DeleteNodeFromBinarySearchTreeRecursively(Node node, int value)
+    {
+        if (node == null)
+        {
+            return null;
+        }
+
+        if (value < node.Value)
+        {
+            node.Left = DeleteNodeFromBinarySearchTreeRecursively(node.Left, value);
+        }
+        if (value > node.Value)
+        {
+            node.Right = DeleteNodeFromBinarySearchTreeRecursively(node.Right, value);
+        }
+        if (value == node.Value)
+        {
+            // Case 1: No child node
+            if (node.Left == null && node.Right == null)
+            {
+                return null;
+            }
+
+            // Case 2: One child node
+            if (node.Left != null && node.Right == null)
+            {
+                return node.Left;
+            }
+            if (node.Left == null && node.Right != null)
+            {
+                return node.Right;
+            }
+            
+            // Case 3: Two child nodes
+            if (node.Left != null && node.Right != null)
+            {
+                node.Value = findMinValue(node.Right);
+                node.Right = DeleteNodeFromBinarySearchTreeRecursively(node.Right, node.Value);
+            }
+        }
+
+        return node;
+    }
+
+    private int findMinValue(Node node)
+    {
+        while (node.Left != null)
+        {
+            findMinValue(node.Left);
+        }
+
+        return node.Value;
     }
 }
