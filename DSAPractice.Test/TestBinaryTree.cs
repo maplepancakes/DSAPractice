@@ -35,6 +35,7 @@ public class TestBinaryTree
         // Level 3
         rootNode.Left.Left = new Node(10);
         rootNode.Left.Right = new Node(30);
+        rootNode.Right.Left = new Node(250);
 
         return rootNode;
     }
@@ -95,7 +96,7 @@ public class TestBinaryTree
     {
         Node node = _binaryTree.InsertionOfBinarySearchTreeIteratively(createBinarySearchTree(), 40);
         
-        // Expected output: 10 -> 20 -> 30 -> 40 -> 100 -> 500
+        // Expected output: 10 -> 20 -> 30 -> 40 -> 100 -> 250 -> 500
         _binaryTree.InorderTraversal(node);
     }
 
@@ -104,7 +105,16 @@ public class TestBinaryTree
     {
         Node node = _binaryTree.InsertionOfBinarySearchTreeRecursively(createBinarySearchTree(), 40);
         
-        // Expected output: 10 -> 20 -> 30 -> 40 -> 100 -> 500
+        // Expected output: 10 -> 20 -> 30 -> 40 -> 100 -> 250 -> 500
+        _binaryTree.InorderTraversal(node);
+    }
+
+    [Fact]
+    public void Test_DeleteNodeFromBinarySearchTreeIteratively()
+    {
+        Node node = _binaryTree.DeleteNodeFromBinarySearchTreeIteratively(createBinarySearchTree(), 10);
+        
+        // Case 1 (no child node), expected output: 20 -> 30 -> 40 -> 100 -> 250 -> 500
         _binaryTree.InorderTraversal(node);
     }
 }

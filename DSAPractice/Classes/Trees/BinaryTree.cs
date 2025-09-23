@@ -267,4 +267,77 @@ public class BinaryTree
 
         return node;
     }
+
+    public Node DeleteNodeFromBinarySearchTreeIteratively(Node node, int value)
+    {
+        if (node == null || (node.Left == null && node.Right == null && node.Value == value))
+        {
+            Console.WriteLine("No tree exists.");
+            return null;
+        }
+
+        Node parentNode = null;
+        Node currentNode = node;
+        while (currentNode != null)
+        {
+            if (value < currentNode.Value)
+            {
+                parentNode = currentNode;
+                currentNode = currentNode.Left;
+                continue;
+            }
+            if (value > currentNode.Value)
+            {
+                parentNode = currentNode;
+                currentNode = currentNode.Right;
+                continue;
+            }
+
+            if (value == currentNode.Value)
+            {
+                // Case 1: No child nodes
+                if (currentNode.Left == null && currentNode.Right == null)
+                {
+                    parentNode.Left = null;
+                    parentNode.Right = null;
+                }
+
+                // Case 2: One child node
+                if ((currentNode.Left != null && currentNode.Right == null) ||
+                    (currentNode.Right != null && currentNode.Left == null))
+                {
+                    if (parentNode.Left.Value == value)
+                    {
+                        parentNode.Left = currentNode.Left == null ? currentNode.Right : currentNode.Left;
+                    }
+                    if (parentNode.Right.Value == value)
+                    {
+                        parentNode.Right = currentNode.Left == null ? currentNode.Right : currentNode.Left;
+                    }
+                }
+
+                // Case 3: Two child nodes
+                if (currentNode.Left != null && currentNode.Right != null)
+                {
+                    // Start with right child, keep going left until there is no more left child. This indicates that the minimum value in the right-subtree has been found
+                    Node parentSuccessor = currentNode;
+                    Node currentSuccessor = currentNode.Right;
+                    while (currentSuccessor.Left != null)
+                    {
+                        parentSuccessor = currentSuccessor;
+                        currentSuccessor = currentSuccessor.Left;
+                    }
+
+                    // Assign min value in right-subtree to the node to be deleted, then delete the duplicate node
+                    // Logic here handles cases with node that contains either one child node or no child node (no need to consider scenario with two child nodes because the node with min value will never have a left child node)
+                    currentNode.Value = currentSuccessor.Value;
+                    parentSuccessor.Left = currentSuccessor.Right;
+                }
+
+                break;
+            }
+        }
+
+        return node;
+    }
 }
