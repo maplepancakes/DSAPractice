@@ -340,4 +340,17 @@ public class BinaryTree
 
         return node;
     }
+
+    public int MaxDepthUsingRecursion(Node node)
+    {
+        if (node == null)
+        {
+            return 0;
+        }
+
+        int left = 1 + MaxDepthUsingRecursion(node.Left);
+        int right = 1 + MaxDepthUsingRecursion(node.Right);
+
+        return left > right ? left : right;
+    }
 }
