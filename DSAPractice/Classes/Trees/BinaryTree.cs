@@ -419,4 +419,50 @@ public class BinaryTree
 
         return left > right ? left : right;
     }
+
+    public bool TargetValueInBinarySearchTreeRecursively(Node node, int targetValue)
+    {
+        if (node == null)
+        {
+            return false;
+        }
+        if (targetValue == node.Value)
+        {
+            return true;
+        }
+
+        bool result = false;
+        if (targetValue > node.Value)
+        {
+            result = TargetValueInBinarySearchTreeRecursively(node.Right, targetValue);
+        }
+        if (targetValue < node.Value)
+        {
+            result = TargetValueInBinarySearchTreeRecursively(node.Left, targetValue);
+        }
+
+        return result;
+    }
+
+    public bool TargetValueInBinarySearchTreeIteratively(Node node, int targetValue)
+    {
+        while (node != null)
+        {
+            if (targetValue == node.Value)
+            {
+                return true;
+            }
+
+            if (targetValue > node.Value)
+            {
+                node = node.Right;
+            }
+            if (targetValue < node.Value)
+            {
+                node = node.Left;
+            }
+        }
+
+        return false;
+    }
 }
