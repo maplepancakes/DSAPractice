@@ -465,4 +465,63 @@ public class BinaryTree
 
         return false;
     }
+
+    public Node IterativeLowestCommonAncestor(Node node, int p, int q)
+    {
+        // Edge case for null root node
+        if (node == null)
+        {
+            return null;
+        }
+
+        while (node != null)
+        {
+            // Visit left child if both p and q are smaller than value of current node
+            if (p < node.Value && q < node.Value)
+            {
+                node = node.Left;
+                continue;
+            }
+            // Visit right child if both p and q are larger than value of current node
+            if (p > node.Value && q > node.Value)
+            {
+                node = node.Right;
+                continue;
+            }
+
+            // If p or q is equal to the value of the current node OR
+            // If p is smaller and q is larger than the value of the current node OR
+            // If q is smaller and p is larger than the value of the current node
+            // Then the current node is the lowest common ancestor of both p and q
+            break;
+        }
+
+        return node;
+    }
+
+    public Node RecursiveLowestCommonAncestor(Node node, int p, int q)
+    {
+        // Edge case for null root node
+        if (node == null)
+        {
+            return null;
+        }
+        
+        // Visit left child if both p and q are smaller than value of current node
+        if (p < node.Value && q < node.Value)
+        {
+            node = RecursiveLowestCommonAncestor(node.Left, p, q);
+        }
+        // Visit right child if both p and q are larger than value of current node
+        if (p > node.Value && q > node.Value)
+        {
+            node = RecursiveLowestCommonAncestor(node.Right, p, q);
+        }
+
+        // If p or q is equal to the value of the current node OR
+        // If p is smaller and q is larger than the value of the current node OR
+        // If q is smaller and p is larger than the value of the current node
+        // Then the current node is the lowest common ancestor of both p and q
+        return node;
+    }
 }
